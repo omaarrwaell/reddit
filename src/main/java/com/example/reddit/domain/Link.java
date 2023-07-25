@@ -28,8 +28,15 @@ public class Link extends Auditable {
 
 
 
+public Link(String title,String url){
+    this.title=title;
+    this.url=url;
+}
 
 
+public void addComment(Comment comment){
+    comments.add(comment);
+}
 
 
 
