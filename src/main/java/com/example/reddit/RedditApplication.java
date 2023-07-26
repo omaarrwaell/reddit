@@ -20,7 +20,7 @@ public class RedditApplication {
 
 
 
-	@Bean
+	//@Bean
 	CommandLineRunner runner(LinkRepository linkRepository, CommentRepository commentRepository){
 		return args->{
 			Link link = new Link("getting started with spring boot","https://google.com");
