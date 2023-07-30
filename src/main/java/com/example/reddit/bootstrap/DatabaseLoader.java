@@ -32,7 +32,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        //addUsersAndRoles();
+        addUsersAndRoles();
 
         Map<String,String> links = new HashMap<>();
         links.put("Securing Spring Boot APIs and SPAs with OAuth 2.0","https://auth0.com/blog/securing-spring-boot-apis-and-spas-with-oauth2/?utm_source=reddit&utm_medium=sc&utm_campaign=springboot_spa_securing");
@@ -56,23 +56,23 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println("Number of links in the database: " + linkCount );
     }
     private void addUsersAndRoles(){
-       // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-       // String secret = "{bcrypt}" + encoder.encode("password");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String secret = "{bcrypt}" + encoder.encode("password");
 
         Role userRole = new Role("ROLE_USER");
         roleRepository.save(userRole);
         Role adminRole = new Role("ROLE_ADMIN");
         roleRepository.save(adminRole);
 
-        User user = new User("user@gmail.com","secret",true);
+        User user = new User("user@gmail.com",secret,true);
         user.addRole(userRole);
         userRepository.save(user);
 
-        User admin = new User("admin@gmail.com","secret",true);
+        User admin = new User("admin@gmail.com",secret,true);
         admin.addRole(adminRole);
         userRepository.save(admin);
 
-        User master = new User("super@gmail.com","secret",true);
+        User master = new User("super@gmail.com", secret,true);
         master.addRoles(new HashSet<>(Arrays.asList(userRole,adminRole)));
         userRepository.save(master);
 
