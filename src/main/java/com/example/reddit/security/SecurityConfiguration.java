@@ -3,6 +3,7 @@ package com.example.reddit.security;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private UserDetailsServiceImpl userDetailsService;
@@ -28,10 +30,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/link/submit").hasRole("USER")
             .and().formLogin().loginPage("/login").permitAll().usernameParameter("email")
             .and().logout()
-            .and().rememberMe();
-//            .and()
-//            .csrf().disable()
-//            .headers().frameOptions().disable();
+            .and().rememberMe()
+            .and()
+            .csrf().disable()
+            .headers().frameOptions().disable();
 
 
     }

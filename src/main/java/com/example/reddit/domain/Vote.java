@@ -1,20 +1,28 @@
 package com.example.reddit.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 @Entity
 @NoArgsConstructor
-@Data
-public class Vote {
+@RequiredArgsConstructor
+@Getter
+@Setter
+public class Vote extends Auditable {
+
     @Id
     @GeneratedValue
-    private long id;
-    private int vote;
+    private Long id;
 
+    @NonNull
+    private short direction;
+
+    @NonNull
+    @ManyToOne
+    private Link link;
 
 }
