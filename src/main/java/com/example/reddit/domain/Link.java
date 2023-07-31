@@ -2,8 +2,7 @@ package com.example.reddit.domain;
 
 
 import com.example.reddit.service.BeanUtil;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +17,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
-import lombok.NonNull;
 import org.hibernate.validator.constraints.URL;
 import org.ocpsoft.prettytime.PrettyTime;
 @Entity
 @NoArgsConstructor
-@Data
+
+@Getter @Setter
 public class Link extends Auditable {
     @Id
     @GeneratedValue
