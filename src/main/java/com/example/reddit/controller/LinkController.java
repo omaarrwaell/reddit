@@ -4,6 +4,8 @@ import com.example.reddit.domain.Comment;
 import com.example.reddit.domain.Link;
 import com.example.reddit.repository.CommentRepository;
 import com.example.reddit.repository.LinkRepository;
+import com.example.reddit.service.CommentService;
+import com.example.reddit.service.LinkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,24 +29,24 @@ public class LinkController {
     private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
 
 
-    private  LinkRepository linkRepository;
-    private CommentRepository commentRepository ;
+    private LinkService linkService;
+    private CommentService commentService ;
 
 
-    public LinkController(LinkRepository linkRepository, CommentRepository commentRepository) {
-        this.linkRepository = linkRepository;
-        this.commentRepository = commentRepository;
+    public LinkController(LinkService linkService, CommentService commentService) {
+        this.linkService = linkService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/")
     public String list(Model model){
-        model.addAttribute("links",linkRepository.findAll());
+        model.addAttribute("links",linkService.findAll());
         return"link/list";
 
    }
     @GetMapping("/link/{id}")
     public String read(@PathVariable Long id,Model model){
-          Optional<Link> link = linkRepository.findById(id);
+          Optional<Link> link = linkService.findById(id);
           if(link.isPresent()){
               Link currentLink = link.get();
               Comment comment = new Comment();
@@ -72,7 +74,7 @@ public class LinkController {
                     model.addAttribute("link",link);
                     return "link/submit";
         }else{
-          linkRepository.save(link);
+            linkService.save(link);
             logger.info(" New link was saved succesfully");
             redirectAttributes.addAttribute("id", link.getId()).addFlashAttribute("success",true);
             return "redirect:/link/{id}";
@@ -87,7 +89,7 @@ public class LinkController {
             logger.info("there was a problem adding a new comment");
         }
 else{
-    commentRepository.save(comment);
+            commentService.save(comment);
             logger.info(" new comment was saved successfully");
         }
         return "redirect:/link/"+comment.getLink().getId();
