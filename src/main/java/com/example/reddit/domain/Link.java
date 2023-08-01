@@ -4,10 +4,7 @@ package com.example.reddit.domain;
 import com.example.reddit.service.BeanUtil;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.OneToMany;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -39,6 +36,9 @@ public class Link extends Auditable {
     private List<Comment> comments = new ArrayList<>();
 
     private int voteCount =0;
+
+    @ManyToOne
+    private User user;
 
 
 
